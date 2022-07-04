@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cwd=$(dirname $(realpath -s $0))
+
 echo "
   _____  ______  _______  _    _  _____  
  / ____||  ____||__   __|| |  | ||  __ \ 
@@ -30,18 +32,23 @@ echo $password | sudo apt install \
 
 
 function raid() {
-    echo $password | sudo ./raid.sh
+    echo $password | sudo $cwd/raid.sh
 }
 
 function docker() {
 
-    echo $password | sudo ./docker/install.sh
-    sh ./docker/post.sh
+    echo $password | sudo $cwd/docker/install.sh
+    echo $password | sudo groupadd docker
+    echo $password | sudo usermod -aG docker $username
 
 }
 
 function openresty() {
-    echo $password | sudo ./openresty/install.sh
+    echo $password | sudo $cwd/openresty/install.sh
+}
+
+function netplan() {
+    echo $password | sudo $cwd/netplan/install.sh
 }
 
 raid
