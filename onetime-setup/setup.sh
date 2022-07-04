@@ -24,7 +24,7 @@ done
 echo $password | sudo apt install tasksel -y
 echo $password | sudo apt install \
     ffmpeg\
-    speedtest \
+    speedtest-cli \
     fzf
 
 
@@ -44,7 +44,12 @@ function openresty() {
     echo $password | sudo ./openresty/install.sh
 }
 
+raid
+docker
+openresty
+
 echo "Appending bashrc"
+cp /home/$username/.bashrc /home/$username/.bashrc.default
 cat ./bashrc.template >> /home/$username/.bashrc
 echo ""
 echo "Done!"
