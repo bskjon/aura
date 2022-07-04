@@ -2,6 +2,7 @@
 
 cwd=$(dirname $(realpath -s $0))
 
+
 echo "
   _____  ______  _______  _    _  _____  
  / ____||  ____||__   __|| |  | ||  __ \ 
@@ -22,9 +23,10 @@ do
     read -s -p "[sudo] password for $USER: " password
 done
 
+echo $password | sudo chmod u+x **/*.sh
 
 echo $password | sudo apt install tasksel -y
-echo $password | sudo apt install \
+echo $password | sudo apt install -y \
     ffmpeg\
     speedtest-cli \
     fzf
