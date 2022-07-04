@@ -1,0 +1,11 @@
+network:
+  renderer: networkd
+  version: 2
+  vlans:
+    internet:
+      id: 24
+      link: enp6s0
+      dhcp4: true
+      dhcp6: true
+      optional: true
+      macaddress: 04:92:26:d3:71:6b

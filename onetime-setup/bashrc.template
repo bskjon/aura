@@ -1,0 +1,37 @@
+alias docker-update='docker-compose pull; docker-compose up -d'
+alias go-encoder='cd /media/md0/docker/encoding'
+alias go-resty='cd /usr/local/openresty/nginx'
+
+alias vm-list='virsh list --all'
+alias vm-log='tail -f /var/log/libvirt/qemu/${1}.log'
+alias vm-start='virsh start win10'
+alias vm-stop='virsh shutdown win10'
+
+source /usr/share/doc/fzf/examples/key-bindings.bash
+source /usr/share/doc/fzf/examples/completion.bash
+
+
+ffdump () {
+  mkdir -p "$HOME/jsonDump"
+  baseName=$( basename "$1" )
+  outFile="$HOME/jsonDump/$baseName.json"
+  ffprobe -v quiet -show_streams -print_format json -i $1 > $outFile
+}
+
+iommu() {
+    shopt -s nullglob
+    for g in `find /sys/kernel/iommu_groups/* -maxdepth 0 -type d | sort -V`; do
+        echo "IOMMU Group ${g##*/}:"
+        for d in $g/devices/*; do
+            echo "\t$(lspci -nns ${d##*/})"
+        done;
+    done;
+}
+
+usb-iommu() {
+    for usb_ctrl in $(find /sys/bus/usb/devices/usb* -maxdepth 0 -type l); do
+        pci_path="$(dirname "$(realpath "${usb_ctrl}")")";
+        echo "Bus $(cat "${usb_ctrl}/busnum") --> $(basename $pci_path) (IOMMU group $(basename $(realpath $pci_path/iommu_group)))";
+        lsusb -s "$(cat "${usb_ctrl}/busnum"):";
+    echo; done
+}
